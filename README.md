@@ -29,5 +29,5 @@ http://cs.stanford.edu/people/alecmgo/trainingandtestdata.zip
 
 Run the model training
 ```bash
-python3. preprocessing.py
+python3 preprocessing.py
 ```
