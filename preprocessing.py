@@ -4,6 +4,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.utils import to_categorical
 from data_loading import load_data
 from model import create_model
+import pickle
 import re
 
 def clean_text(text):
@@ -51,6 +52,11 @@ if __name__ == "__main__":
 
     # Tokenize the text and convert to sequences
     tokenizer = tokenize_text(df['text'])
+
+    # Save the tokenizer as a pickle file
+    with open('tokenizer.pickle', 'wb') as handle:
+        pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
     sequences = text_to_sequences(tokenizer, df['text'])
     print(sequences[0])
 
@@ -68,6 +74,10 @@ if __name__ == "__main__":
 
     # Train the model
     model.fit(sequences_train, labels_train, epochs=3, validation_data=(sequences_test, labels_test))
+
+    # Save the model
+    model.save('sentiment_analysis_model.h5')
+
     tweet = fetch_tweet()
     sentiment = predict_sentiment(model, tokenizer, tweet)
     print(f"The sentiment of the tweet is: {sentiment}")
