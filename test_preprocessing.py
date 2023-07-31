@@ -1,5 +1,6 @@
 from data_loading import load_data
 from preprocessing import clean_text, tokenize_text, text_to_sequences
+from model import create_model
 
 if __name__ == "__main__":
     file_path = './training.1600000.processed.noemoticon.csv'
@@ -13,4 +14,8 @@ if __name__ == "__main__":
     tokenizer = tokenize_text(df['text'])
     sequences = text_to_sequences(tokenizer, df['text'])
     print(sequences[0])
-    
+
+    # Create the model
+    vocab_size = len(tokenizer.word_index) + 1
+    model = create_model(input_dim=vocab_size, output_dim=100, input_length=100)
+    model.summary()
